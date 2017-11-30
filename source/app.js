@@ -43,13 +43,17 @@ let number = document.querySelectorAll('.number')
 let operators = document.querySelectorAll('.operator')
 let equals = document.querySelector('.equal')
 let clear = document.querySelector('.clear')
+display.innerHTML = '0'
 let op = ''
-// let num2 = 0
-// let num1 = 0
+let num2 = 0
+let num1 = 0
 
 
 for (let i = 0; i < number.length; i++) {
   number[i].addEventListener('click', (e) => {
+    if(display.innerHTML === '0') {
+      display.innerHTML = ''
+    }
     display.textContent += number[i].value
     num2 = Number(display.innerHTML)
   })
@@ -58,9 +62,21 @@ for (let i = 0; i < number.length; i++) {
 
 for (let i2 = 0; i2 < operators.length; i2++) {
   operators[i2].addEventListener('click', (e) => {
-    num1 = num2
-    display.innerHTML = ''
-    op = operators[i2].value
+    console.log(operators[i2].value);
+    if(display.innerHTML === '0'  || display.innerHTML === '' && operators[i2].value === '-') {
+      display.innerHTML = ''
+      display.textContent += operators[i2].value
+    } else {
+
+      if(num1 !== 0) {
+        num1 = operate(op, num1, num2)
+      }
+
+        else
+        num1 = num2
+        display.innerHTML = ''
+        op = operators[i2].value
+    }
   })
 }
 
@@ -75,5 +91,5 @@ equals.addEventListener('click', (e) => {
 clear.addEventListener('click', (e) => {
   num1 = 0
   num2 = 0
-  display.innerHTML = ''
+  display.innerHTML = '0'
 })
